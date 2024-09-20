@@ -28,7 +28,24 @@ string binaryToHex (const string& strNumber);
 int main () {
   string userPrompt = "Enter your string to convert (q to quit): ";
   string myTitle = "*****HEX-DECIMAL-BINARY CONVERTER*****";
+  string number;
 
+  printTitle (myTitle);
+  number = getNumber (userPrompt);
+
+  switch (getBase (number)) {
+    case 'D':
+      decimalToBinary (number);
+      decimalToHex (number);
+      break;
+    case 'H':
+      hexToBinary (number);
+      hexToDecimal (number);
+      break;
+    case 'B':
+      binaryToDecimal (number);
+      binaryToHex (number);
+  }
   
   return EXIT_SUCCESS;
 }
