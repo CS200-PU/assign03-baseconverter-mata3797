@@ -45,6 +45,7 @@ int main () {
     case 'B':
       binaryToDecimal (number);
       binaryToHex (number);
+      break;
   }
   
   return EXIT_SUCCESS;
