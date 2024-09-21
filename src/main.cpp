@@ -43,12 +43,12 @@ int main () {
         << decimalToHex (number) << endl;
       break;
     case 'H':
-      hexToBinary (number);
-      hexToDecimal (number);
+      cout << hexToBinary (number) << endl;
+      cout << hexToDecimal (number) << endl;
       break;
     case 'B':
-      binaryToDecimal (number);
-      binaryToHex (number);
+      cout << binaryToDecimal (number) << endl;
+      //cout << binaryToHex (number) << endl;
       break;
   }
   
@@ -118,7 +118,32 @@ Parameters: strNumber - a string representing a binary number
 Return: a string representation of a decimal number
 ******************************************************************************/
 string binaryToDecimal (const string& strNumber) {
+  string binaryNum = "";
+  string decimal = "";
+  int remainder;
+  int number;
+  int sum = 0;
+  int base = 1;
+  int i = 2;
 
+  while (strNumber[i]) {
+    binaryNum = binaryNum + (strNumber[i]);
+    i++;
+  }
+
+  number = stoi(binaryNum);
+
+  while (number != 0) {
+    remainder = number % 10;
+    number = number / 10;
+    sum = sum + (remainder * base);
+    //decimal = to_string((remainder * base)) + decimal;
+    base = base * 2;
+  }
+
+  decimal = to_string(sum);
+
+  return decimal;
 }
 
 /******************************************************************************
