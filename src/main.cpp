@@ -29,14 +29,18 @@ int main () {
   string userPrompt = "Enter your string to convert (q to quit): ";
   string myTitle = "*****HEX-DECIMAL-BINARY CONVERTER*****";
   string number;
+  string output1;
+  string output2;
 
   printTitle (myTitle);
   number = getNumber (userPrompt);
 
   switch (getBase (number)) {
     case 'D':
-      decimalToBinary (number);
-      decimalToHex (number);
+      cout << "The binary conversion is: " 
+        << decimalToBinary (number) << endl;
+      cout << "The hexadecimal conversion is: " 
+        << decimalToHex (number) << endl;
       break;
     case 'H':
       hexToBinary (number);
@@ -123,7 +127,18 @@ Parameters: strNumber - a string representing a decimal number
 Return: a string representation of a binary number
 ******************************************************************************/
 string decimalToBinary (const string& strNumber) {
-
+  string binary = "";
+  int remainder;
+  int number = stoi(strNumber);
+  while (number != 0) {
+    remainder = number % 2;
+    number = number / 2;
+    binary = to_string(remainder) + binary;
+  }
+  if (binary == "") {
+    binary = binary + "0";
+  }
+  return "0b" + binary;
 }
 
 /******************************************************************************
@@ -132,7 +147,38 @@ Parameters: strNumber - a string representing a decimal number
 Return: a string representation of a hex number
 ******************************************************************************/
 string decimalToHex (const string& strNumber) {
-
+  string hex = "";
+  int remainder;
+  int number = stoi(strNumber);
+  while (number != 0) {
+    remainder = number % 16;
+    number = number / 16;
+    if (remainder <= 9) {
+      hex = to_string(remainder) + hex;
+    }
+    else if (remainder == 10) {
+      hex = "A" + hex;
+    }
+    else if (remainder == 11) {
+      hex = "B" + hex;
+    }
+    else if (remainder == 12) {
+      hex = "C" + hex;
+    }
+    else if (remainder == 13) {
+      hex = "D" + hex;
+    }
+    else if (remainder == 14) {
+      hex = "E" + hex;
+    }
+    else if (remainder == 15) {
+      hex = "F" + hex;
+    }
+  }
+  if (hex == "") {
+    hex = hex + "0";
+  }
+  return "0x" + hex;
 }
 
 /******************************************************************************
