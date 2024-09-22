@@ -33,6 +33,38 @@ int main () {
   string output2;
 
   printTitle (myTitle);
+  
+  do {
+    number = getNumber (userPrompt);
+
+    switch (getBase (number)) {
+      case 'D':
+        cout << "The binary conversion is: " 
+          << decimalToBinary (number) << endl;
+        cout << "The hexadecimal conversion is: " 
+          << decimalToHex (number) << endl;
+        break;
+      case 'H':
+        cout << "The decimal conversion is: " 
+          << hexToDecimal (number) << endl;
+        cout << "The binary conversion is: " 
+          << hexToBinary (number) << endl;
+        break;
+      case 'B':
+        cout << "The decimal conversion is: " 
+          << binaryToDecimal (number) << endl;
+        cout << "The hexadecimal conversion is: " 
+          << binaryToHex (number) << endl;
+        break;
+      case 'q':
+        break;
+      default:
+        break;
+    }
+    cout << endl;
+  } while (number != "q");
+  
+  /*
   number = getNumber (userPrompt);
 
   switch (getBase (number)) {
@@ -43,14 +75,21 @@ int main () {
         << decimalToHex (number) << endl;
       break;
     case 'H':
-      cout << hexToBinary (number) << endl;
-      cout << hexToDecimal (number) << endl;
+      cout << "The decimal conversion is: " 
+        << hexToDecimal (number) << endl;
+      cout << "The binary conversion is: " 
+        << hexToBinary (number) << endl;
       break;
     case 'B':
-      cout << binaryToDecimal (number) << endl;
-      //cout << binaryToHex (number) << endl;
+      cout << "The decimal conversion is: " 
+        << binaryToDecimal (number) << endl;
+      cout << "The hexadecimal conversion is: " 
+        << binaryToHex (number) << endl;
+      break;
+    default:
       break;
   }
+  */
   
   return EXIT_SUCCESS;
 }
@@ -83,6 +122,9 @@ char getBase (const string& strNumber) {
   }
   else if (strNumber[0]=='0' && strNumber[1]=='x') {
     return 'H';
+  }
+  else if (strNumber[0]=='q') {
+    return 'q';
   }
   else {
     return 'D';
@@ -212,7 +254,47 @@ Parameters: strNumber - a string representing a hex number
 Return: a string representation of a decimal number
 ******************************************************************************/
 string hexToDecimal (const string& strNumber) {
+  string hexNum = "";
+  string decimal = "";
+  int sum = 0;
+  int base = 1;
 
+  for (int i = strNumber.size() - 1; i >= 2; i--) {
+    hexNum = strNumber[i];
+    if (hexNum == "A") {
+      sum = sum + (base * 10);
+    }
+    else if (hexNum == "B") {
+      sum = sum + (base * 11);
+    }
+    else if (hexNum == "C") {
+      sum = sum + (base * 12);
+    }
+    else if (hexNum == "D") {
+      sum = sum + (base * 13);
+    }
+    else if (hexNum == "E") {
+      sum = sum + (base * 14);
+    }
+    else if (hexNum == "F") {
+      sum = sum + (base * 15);
+    }
+    else if (strNumber[i] >= 48 && strNumber[i] <= 57) {
+      sum = sum + (base * stoi(hexNum));
+    }
+
+    base = base * 16;
+  }
+
+  decimal = to_string(sum);
+
+  /*
+  if (strNumber[i] >= 65 && strNumber[i] <= 70) {
+    sum = sum + (base * hexCharToInt(strNumber[i]));
+  }
+  */
+
+  return decimal;
 }
 
 /******************************************************************************
@@ -221,7 +303,7 @@ Parameters: strNumber - a string representing a hex number
 Return: a string representation of a binary number
 ******************************************************************************/
 string hexToBinary (const string& strNumber) {
-
+  return decimalToBinary (hexToDecimal (strNumber));
 }
 
 /******************************************************************************
@@ -230,5 +312,5 @@ Parameters: strNumber - a string representing a binary number
 Return: a string representation of a hex number
 ******************************************************************************/
 string binaryToHex (const string& strNumber) {
-
+  return decimalToHex (binaryToDecimal (strNumber));
 }
